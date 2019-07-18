@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,15 @@ namespace OcelotApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            // set forward header keys to be the same value as request's header keys
+            // so that redirect URIs and other security policies work correctly.
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedHost | ForwardedHeaders.XForwardedProto;
+            });
+
             //services.TryAddSingleton<IOcelotLoggerFactory, AspDotNetLoggerFactory>();
             //services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.AddOcelot();
@@ -27,6 +37,8 @@ namespace OcelotApiGateway
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseForwardedHeaders();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -37,7 +49,7 @@ namespace OcelotApiGateway
                 app.UseHsts();
             }
             //app.UseOcelot().Wait();
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseMvc();
 
         }
