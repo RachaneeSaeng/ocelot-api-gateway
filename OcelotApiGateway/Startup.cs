@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Ocelot.Administration;
 using Ocelot.DependencyInjection;
 using Ocelot.Logging;
 using Ocelot.Middleware;
@@ -45,7 +46,9 @@ namespace OcelotApiGateway
 
             services.TryAddSingleton<IOcelotLoggerFactory, AspDotNetLoggerFactory>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddOcelot();
+            services
+                .AddOcelot()
+                .AddAdministration("/admin", "abc123");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
