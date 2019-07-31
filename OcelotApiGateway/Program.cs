@@ -28,9 +28,5 @@ namespace OcelotApiGateway
                 })
                 .UseNLog()
                 .UseStartup<Startup>();
-        //.ConfigureKestrel((context, options) =>
-        //{
-        //    options.ConfigureEndpoints();
-        //});
     }
 }

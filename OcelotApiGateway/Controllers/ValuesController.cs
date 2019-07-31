@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
@@ -12,22 +13,26 @@ namespace OcelotApiGateway.Controllers
         private readonly ILogger<ValuesController> _logger;
         //private readonly IOcelotLogger _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IConfiguration _configuration;
 
         public ValuesController(
             ILogger<ValuesController> logger,
         //IOcelotLoggerFactory loggerFactory, 
-        IHttpContextAccessor httpContextAccessor
+        IHttpContextAccessor httpContextAccessor,
+        IConfiguration config
         )
         {
             _logger = logger;
             //_logger = loggerFactory.CreateLogger<ValuesController>();
             _httpContextAccessor = httpContextAccessor;
+            _configuration = config;
         }
 
         // GET api/values
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            //var cfg = _configuration["GGGG"];
             //var x = Get("");
             //_logger.LogInformation($"-*-*-*-*-*- {x}");
             _logger.LogInformation("Index page says hello");
