@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using NLog.Web;
+using System.IO;
 
 namespace OcelotApiGateway
 {

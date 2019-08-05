@@ -12,6 +12,7 @@ using Ocelot.Logging;
 using Ocelot.Middleware;
 using System;
 using System.Net.Http;
+using System.Reflection;
 
 namespace OcelotApiGateway
 {
@@ -72,16 +73,22 @@ namespace OcelotApiGateway
                 app.UseHsts();
             }
 
+            app.UseStaticFiles();
+
             app.UseHttpsRedirection();
             app.UseMvc();
 
-            app.UseSwaggerUI(c =>
+            app.UseSwaggerUI(options =>
             {
                 var configurationSection = Configuration.GetSection("DownstreamSwaggerUrls");
                 foreach (var version in configurationSection.GetChildren())
                 {
-                    c.SwaggerEndpoint($"/swagger/{version.Key}/swagger.json", version.Key);
+                    options.SwaggerEndpoint($"/swagger/{version.Key}/swagger.json", version.Key);
                 }
+
+                options.IndexStream = () => Assembly.GetExecutingAssembly()
+                    .GetManifestResourceStream("OcelotApiGateway.wwwroot.swagger.ui.index.html");
+                options.InjectBaseUrl("http://localhost:55090");
             });
 
             app.UseOcelot().Wait();
