@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace OcelotApiGateway.Controllers
@@ -35,8 +36,10 @@ namespace OcelotApiGateway.Controllers
             //var cfg = _configuration["GGGG"];
             //var x = Get("");
             //_logger.LogInformation($"-*-*-*-*-*- {x}");
+
+            var json = MergeJson();
             _logger.LogInformation("Index page says hello");
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", json };
         }
 
         // GET api/values/5
@@ -81,6 +84,52 @@ namespace OcelotApiGateway.Controllers
             //}
 
             //return $"Unable to find data for key: {key}";
+        }
+
+        private string MergeJson()
+        {
+            JObject o1 = JObject.Parse(@"{
+  'FirstName': 'John',
+  'LastName': {
+    'FamilyName': 'abc',
+    'Surname': 'def',
+    'a': {
+        'b': {
+            'c': {
+                    'd': {
+                        'e': 10
+                    },
+                    'f': 11
+                }
+            }
+        }
+    },
+  'Enabled': false,
+  'Roles': [ 'User']
+}");
+            JObject o2 = JObject.Parse(@"{
+  'FirstName': 'Apple',
+'Roles': [ 'DDD', 'Datra'],
+  'LastName': {
+    'FamilyName': 'abc',
+    'Surname': 'def',
+    'a': {
+        'b': {
+            'e': 10
+        }
+    }
+   },
+  'Enabled': true  
+}");
+
+            o1.Merge(o2, new JsonMergeSettings
+            {
+                // union array values together to avoid duplicates
+                MergeArrayHandling = MergeArrayHandling.Union
+            });
+
+            string json = o1.ToString();
+            return json;
         }
     }
 }
