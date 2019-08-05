@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace OcelotApiGateway.Controllers
@@ -8,22 +7,19 @@ namespace OcelotApiGateway.Controllers
     [ApiController]
     public class SwaggerController : ControllerBase
     {
-        [HttpGet]
-        [Route("v1/swagger.json")]
-        public async Task<string> GetV1()
+        private SwaggerLoader _swgLoader;
+        public SwaggerController(SwaggerLoader swgLoader)
         {
-            var _client = new HttpClient();
-            var responseString = await _client.GetStringAsync($"http://localhost:22742/swagger/v1/swagger.json");
-            return responseString;
+            _swgLoader = swgLoader;
         }
 
         [HttpGet]
-        [Route("v2/swagger.json")]
-        public async Task<string> GetV2()
+        [Route("{version}/swagger.json")]
+        public async Task<string> Get(string version)
         {
-            var _client = new HttpClient();
-            var responseString = await _client.GetStringAsync($"https://localhost:44390/swagger/v1/swagger.json");
-            return responseString;
+            var swaggerJson = await _swgLoader.LoadSwagger(version);
+            return swaggerJson;
         }
+
     }
 }

@@ -48,9 +48,9 @@ namespace OcelotApiGateway
             services.TryAddSingleton<IOcelotLoggerFactory, AspDotNetLoggerFactory>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.TryAddSingleton<HttpClient, HttpClient>();
+            services.TryAddSingleton<SwaggerLoader, SwaggerLoader>();
             services
                 .AddOcelot()
-                //.AddDelegatingHandler<SwaggerHandler>()
                 .AddAdministration("/admin", "abc123");
             //AddCacheManager
             //AddPolly
@@ -77,7 +77,11 @@ namespace OcelotApiGateway
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Central API V1");
+                var configurationSection = Configuration.GetSection("DownstreamSwaggerUrls");
+                foreach (var version in configurationSection.GetChildren())
+                {
+                    c.SwaggerEndpoint($"/swagger/{version.Key}/swagger.json", version.Key);
+                }
             });
 
             app.UseOcelot().Wait();

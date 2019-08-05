@@ -9,9 +9,10 @@
           "Port": 22742
         }
       ],
-      "UpstreamPathTemplate": "/api/services/{everything}",
+      "UpstreamPathTemplate": "/v1/api/services/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
     },
+
     {
       "DownstreamPathTemplate": "/api/TokenAuth/{everything}",
       "DownstreamScheme": "http",
@@ -21,9 +22,10 @@
           "Port": 22742
         }
       ],
-      "UpstreamPathTemplate": "/api/TokenAuth/{everything}",
+      "UpstreamPathTemplate": "/v1/api/TokenAuth/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post" ]
     },
+
     {
       "DownstreamPathTemplate": "/api/provisioning/{everything}",
       "DownstreamScheme": "https",
@@ -33,9 +35,50 @@
           "Port": 44390
         }
       ],
-      "UpstreamPathTemplate": "/api/provisioning/{everything}",
+      "UpstreamPathTemplate": "/v1/api/provisioning/{everything}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    
+
+    {
+      "DownstreamPathTemplate": "/api/services/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 22742
+        }
+      ],
+      "UpstreamPathTemplate": "/v2/api/services/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
-    }    
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/TokenAuth/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 22742
+        }
+      ],
+      "UpstreamPathTemplate": "/v2/api/TokenAuth/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/provisioning/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44391
+        }
+      ],
+      "UpstreamPathTemplate": "/v2/api/provisioning/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+    }
+
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000"
