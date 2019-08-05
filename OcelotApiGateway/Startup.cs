@@ -11,6 +11,7 @@ using Ocelot.DependencyInjection;
 using Ocelot.Logging;
 using Ocelot.Middleware;
 using System;
+using System.Net.Http;
 
 namespace OcelotApiGateway
 {
@@ -46,9 +47,13 @@ namespace OcelotApiGateway
 
             services.TryAddSingleton<IOcelotLoggerFactory, AspDotNetLoggerFactory>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.TryAddSingleton<HttpClient, HttpClient>();
             services
                 .AddOcelot()
+                //.AddDelegatingHandler<SwaggerHandler>()
                 .AddAdministration("/admin", "abc123");
+            //AddCacheManager
+            //AddPolly
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,9 +71,16 @@ namespace OcelotApiGateway
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            //app.UseOcelot().Wait();
+
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Central API V1");
+            });
+
+            app.UseOcelot().Wait();
 
         }
     }

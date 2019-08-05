@@ -1,7 +1,7 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamPathTemplate": "/api/services/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,9 +9,33 @@
           "Port": 22742
         }
       ],
-      "UpstreamPathTemplate": "/{everything}",
+      "UpstreamPathTemplate": "/api/services/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/TokenAuth/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 22742
+        }
+      ],
+      "UpstreamPathTemplate": "/api/TokenAuth/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post" ]
-    }
+    },
+    {
+      "DownstreamPathTemplate": "/api/provisioning/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44390
+        }
+      ],
+      "UpstreamPathTemplate": "/api/provisioning/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+    }    
   ],
   "GlobalConfiguration": {
     "BaseUrl": "http://localhost:5000"
