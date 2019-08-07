@@ -1,6 +1,67 @@
 {
   "ReRoutes": [
     {
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamPathTemplate": "/AbpUserConfiguration/{everything}",
+      "DownstreamPathTemplate": "/AbpUserConfiguration/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "coreapi",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "UpstreamPathTemplate": "/signalr/{everything}",
+      "DownstreamPathTemplate": "/signalr/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "coreapi",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "UpstreamPathTemplate": "/signalr-chat/{everything}",
+      "DownstreamPathTemplate": "/signalr-chat/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "coreapi",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/signalr",
+      "DownstreamPathTemplate": "/signalr",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "coreapi",
+          "Port": 80
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/signalr-chat",
+      "DownstreamPathTemplate": "/signalr-chat",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "coreapi",
+          "Port": 80
+        }
+      ]
+    },
+
+    {
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamPathTemplate": "/v1/api/services/{everything}",
       "DownstreamPathTemplate": "/api/services/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -8,12 +69,11 @@
           "Host": "coreapi",
           "Port": 80
         }
-      ],
-      "UpstreamPathTemplate": "/v1/api/services/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      ]
     },
-
     {
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "UpstreamPathTemplate": "/v1/api/TokenAuth/{everything}",
       "DownstreamPathTemplate": "/api/TokenAuth/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -21,12 +81,11 @@
           "Host": "coreapi",
           "Port": 80
         }
-      ],
-      "UpstreamPathTemplate": "/v1/api/TokenAuth/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      ]
     },
-
     {
+      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamPathTemplate": "/v1/api/provisioning/{everything}",
       "DownstreamPathTemplate": "/api/provisioning/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -34,13 +93,12 @@
           "Host": "provisioning-v1",
           "Port": 80
         }
-      ],
-      "UpstreamPathTemplate": "/v1/api/provisioning/{everything}",
-      "UpstreamHttpMethod": [ "Get" ]
+      ]
     },
-    
 
     {
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamPathTemplate": "/v2/api/services/{everything}",
       "DownstreamPathTemplate": "/api/services/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -48,12 +106,11 @@
           "Host": "coreapi",
           "Port": 80
         }
-      ],
-      "UpstreamPathTemplate": "/v2/api/services/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      ]
     },
-
     {
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "UpstreamPathTemplate": "/v2/api/TokenAuth/{everything}",
       "DownstreamPathTemplate": "/api/TokenAuth/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -61,12 +118,11 @@
           "Host": "coreapi",
           "Port": 80
         }
-      ],
-      "UpstreamPathTemplate": "/v2/api/TokenAuth/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      ]
     },
-
     {
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamPathTemplate": "/v2/api/provisioning/{everything}",
       "DownstreamPathTemplate": "/api/provisioning/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -79,10 +135,7 @@
         "ExceptionsAllowedBeforeBreaking": 2,
         "DurationOfBreak": 5000,
         "TimeoutValue": 3000
-      },
-      "UpstreamPathTemplate": "/v2/api/provisioning/{everything}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+      }
     }
-
   ]
 }
