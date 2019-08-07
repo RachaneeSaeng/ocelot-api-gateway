@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Abp.Extensions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -11,6 +12,7 @@ using Ocelot.Logging;
 using Ocelot.Middleware;
 using Ocelot.Provider.Polly;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 
@@ -18,6 +20,8 @@ namespace OcelotApiGateway
 {
     public class Startup
     {
+        private const string DefaultCorsPolicyName = "corspolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,7 +32,29 @@ namespace OcelotApiGateway
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //MVC
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //Configure CORS for angular2 UI
+            services.AddCors(options =>
+            {
+                options.AddPolicy(DefaultCorsPolicyName, builder =>
+                {
+                    //App:CorsOrigins in appsettings.json can contain more than one address with splitted by comma.
+                    builder
+                        .WithOrigins(
+                            // App:CorsOrigins in appsettings.json can contain more than one address separated by comma.
+                            Configuration["CorsOrigins"]
+                                .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                                .Select(o => o.RemovePostFix("/"))
+                                .ToArray()
+                        )
+                        .SetIsOriginAllowedToAllowWildcardSubdomains()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials();
+                });
+            });
 
             // set forward header keys to be the same value as request's header keys
             // so that redirect URIs and other security policies work correctly.
@@ -68,9 +94,11 @@ namespace OcelotApiGateway
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles();
+            app.UseWebSockets();
 
-            app.UseMvc();
+            app.UseCors(DefaultCorsPolicyName); //Enable CORS!
+
+            app.UseStaticFiles();
 
             app.UseSwaggerUI(options =>
             {
@@ -84,6 +112,8 @@ namespace OcelotApiGateway
                     .GetManifestResourceStream("OcelotApiGateway.wwwroot.swagger.ui.index.html");
                 options.InjectBaseUrl(Configuration["GlobalConfiguration:BaseUrl"]);
             });
+
+            app.UseMvc();
 
             app.UseOcelot().Wait(); // admin path won't work when call after UseMvc(). But If it's called before UseMvc(), swagger and customer endpoints won't work.
         }

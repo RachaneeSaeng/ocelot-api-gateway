@@ -77,7 +77,7 @@
       ],
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 2,
-        "DurationOfBreak": 55555,
+        "DurationOfBreak": 5000,
         "TimeoutValue": 3000
       },
       "UpstreamPathTemplate": "/v2/api/provisioning/{everything}",

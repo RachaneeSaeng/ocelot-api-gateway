@@ -1,5 +1,76 @@
 {
   "ReRoutes": [
+
+    {
+      "DownstreamPathTemplate": "/AbpUserConfiguration/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 22742
+        }
+      ],
+      "UpstreamPathTemplate": "/AbpUserConfiguration/{everything}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },    
+    {
+      "DownstreamPathTemplate": "/signalr/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 22742
+        }
+      ],
+      "UpstreamPathTemplate": "/signalr/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    },    
+    {
+      "DownstreamPathTemplate": "/signalr-chat/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 22742
+        }
+      ],
+      "UpstreamPathTemplate": "/signalr-chat/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+    {
+      "UpstreamPathTemplate": "/",
+      "DownstreamPathTemplate": "/ws",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 22742
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/signalr",
+      "DownstreamPathTemplate": "/signalr",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 22742
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/signalr-chat",
+      "DownstreamPathTemplate": "/signalr-chat",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 22742
+        }
+      ]
+    },
+
     {
       "DownstreamPathTemplate": "/api/services/{everything}",
       "DownstreamScheme": "http",
@@ -38,7 +109,6 @@
       "UpstreamPathTemplate": "/v1/api/provisioning/{everything}",
       "UpstreamHttpMethod": [ "Get" ]
     },
-    
 
     {
       "DownstreamPathTemplate": "/api/services/{everything}",
