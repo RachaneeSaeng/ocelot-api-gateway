@@ -31,6 +31,7 @@ namespace OcelotApiGateway
             var swaggerSpecs = rawSwaggerSpecs.Select(spec => spec.Replace("/api/", $"/{version}/api/"));
 
             var jObject = CreateJsonObject(swaggerSpecs);
+            SetCommonInfo(jObject, version);
 
             return jObject.ToString();
         }
@@ -40,10 +41,17 @@ namespace OcelotApiGateway
             var swaggerSpecs = new List<string>();
             foreach (var url in swaggerUrls)
             {
-                var responseString = await _client.GetStringAsync(url);
-                if (!string.IsNullOrEmpty(responseString))
+                try
                 {
-                    swaggerSpecs.Add(responseString);
+                    var responseString = await _client.GetStringAsync(url);
+                    if (!string.IsNullOrEmpty(responseString))
+                    {
+                        swaggerSpecs.Add(responseString);
+                    }
+                }
+                catch (HttpRequestException)
+                {
+                    continue;
                 }
             }
             return swaggerSpecs;
@@ -62,25 +70,30 @@ namespace OcelotApiGateway
                     new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Union });
             }
 
+            return jObject;
+        }
+
+        private void SetCommonInfo(JObject jObject, string version)
+        {
             // Overide common spec
-            var commonSpec = JObject.Parse(@"{
-                                    'info': {
-                                        'version': 'v1',
-                                        'title': 'Central API'
-                                    },
-                                    'securityDefinitions': {
-                                        'Bearer': {
-                                            'type': 'basic'
-                                        }
-                                    }
-                                }");
+            var info = @"{
+    'swagger': '2.0',
+    'info': {
+        'version': '{0}',
+        'title': 'Central API'
+    },
+    'securityDefinitions': {
+        'Bearer': {
+            'type': 'basic'
+        }
+    }
+}";
+            info = info.Replace("'{0}'", $"'{version}'");
+            var commonSpec = JObject.Parse(info);
 
             jObject.Merge(
                     commonSpec,
                     new JsonMergeSettings { MergeArrayHandling = MergeArrayHandling.Union });
-
-            return jObject;
         }
-
     }
 }

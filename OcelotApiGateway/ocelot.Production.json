@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 22742
+          "Host": "coreapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/v1/api/services/{everything}",
@@ -18,8 +18,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 22742
+          "Host": "coreapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/v1/api/TokenAuth/{everything}",
@@ -28,11 +28,11 @@
 
     {
       "DownstreamPathTemplate": "/api/provisioning/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44390
+          "Host": "provisioning-v1",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/v1/api/provisioning/{everything}",
@@ -45,8 +45,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 22742
+          "Host": "coreapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/v2/api/services/{everything}",
@@ -58,8 +58,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 22742
+          "Host": "coreapi",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/v2/api/TokenAuth/{everything}",
@@ -68,20 +68,21 @@
 
     {
       "DownstreamPathTemplate": "/api/provisioning/{everything}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 44391
+          "Host": "provisioning-v2",
+          "Port": 80
         }
       ],
       "QoSOptions": {
         "ExceptionsAllowedBeforeBreaking": 2,
-        "DurationOfBreak": 5000,
+        "DurationOfBreak": 55555,
         "TimeoutValue": 3000
       },
       "UpstreamPathTemplate": "/v2/api/provisioning/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
     }
-  ]  
+
+  ]
 }

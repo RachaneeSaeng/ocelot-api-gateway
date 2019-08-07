@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotApiGateway", "OcelotApiGateway\OcelotApiGateway.csproj", "{7AD79069-BF13-4B23-95D3-AF607F4E2EC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotApiGateway", "OcelotApiGateway\OcelotApiGateway.csproj", "{7AD79069-BF13-4B23-95D3-AF607F4E2EC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotApiGateWay.UnitTest", "OcelotApiGateWay.UnitTest\OcelotApiGateWay.UnitTest.csproj", "{A2AE8C9B-32F9-4473-9D66-DD4546FB39DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7AD79069-BF13-4B23-95D3-AF607F4E2EC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AD79069-BF13-4B23-95D3-AF607F4E2EC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AD79069-BF13-4B23-95D3-AF607F4E2EC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2AE8C9B-32F9-4473-9D66-DD4546FB39DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2AE8C9B-32F9-4473-9D66-DD4546FB39DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2AE8C9B-32F9-4473-9D66-DD4546FB39DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2AE8C9B-32F9-4473-9D66-DD4546FB39DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

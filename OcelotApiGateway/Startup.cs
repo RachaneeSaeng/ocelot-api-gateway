@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Ocelot.Administration;
 using Ocelot.DependencyInjection;
 using Ocelot.Logging;
 using Ocelot.Middleware;
+using Ocelot.Provider.Polly;
 using System;
 using System.Net.Http;
 using System.Reflection;
@@ -52,30 +52,24 @@ namespace OcelotApiGateway
             services.TryAddSingleton<SwaggerLoader, SwaggerLoader>();
             services
                 .AddOcelot()
-                .AddAdministration("/admin", "abc123");
+                .AddPolly();
+            //.AddAdministration("/ocelot", "abc123");
             //AddCacheManager
-            //AddPolly
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseForwardedHeaders();
-            app.UseHsts();
+            //app.UseHsts();
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
 
             app.UseStaticFiles();
 
-            app.UseHttpsRedirection();
             app.UseMvc();
 
             app.UseSwaggerUI(options =>
@@ -88,11 +82,10 @@ namespace OcelotApiGateway
 
                 options.IndexStream = () => Assembly.GetExecutingAssembly()
                     .GetManifestResourceStream("OcelotApiGateway.wwwroot.swagger.ui.index.html");
-                options.InjectBaseUrl("http://localhost:55090");
+                options.InjectBaseUrl(Configuration["GlobalConfiguration:BaseUrl"]);
             });
 
-            app.UseOcelot().Wait();
-
+            app.UseOcelot().Wait(); // admin path won't work when call after UseMvc(). But If it's called before UseMvc(), swagger and customer endpoints won't work.
         }
     }
 }
