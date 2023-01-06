@@ -36,7 +36,7 @@
     <PackageReference Include="Ocelot.Administration" Version="13.5.2" />
     <PackageReference Include="Ocelot.Provider.Polly" Version="13.5.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="4.0.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
